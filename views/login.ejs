@@ -1,0 +1,22 @@
+<%- include("header") -%>
+
+<span class="greeting" style="width: 100%; text-align: center;">Login</span>
+<form action="/login" method="post">
+    <div class="new">
+        
+        <div class="form_group field">
+            <input type="input" class="form_field" placeholder="Enter username" name="username" id='username' required />
+            <label for="username" class="form_label">Enter username</label>
+        </div>
+        <div class="form_group field">    
+            <input type="password" class="form_field" placeholder="Password" name="password" id="password" />
+            <label for="password" class="form_label">Enter password</label>
+        </div>
+        <br/>
+        <button type="submit" class="add">Login</button>
+
+    </div>
+</form>
+
+
+<%- include("footer") -%> 

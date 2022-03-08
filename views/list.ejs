@@ -1,0 +1,50 @@
+<%- include("header") -%> 
+<div class="main_div">
+
+    <!-- <div class="nav"> -->
+        <span class="greeting">Hello <%= %> </span>
+        <!-- <button type="" class="logout">Log out</button> -->
+    <!-- </div> -->
+
+    <div class="home">
+        <!-- <div class="prev flexbox">
+            <h2><</h2>
+            <p>Prev</p>
+        </div> -->
+        <div class="center flexbox">
+            <div class="box" id="date">
+                <h1 style="font-size: 1.9rem;"><%= date %></h1>
+            </div>
+
+            <div class="box" id="list">
+                <!-- <h2>This is where the list goes</h2> -->
+                <% listItems.forEach(listItem => { %>
+                    <form action="/delete" method="post">
+                        <div class="item">
+                            <input type="checkbox" name="checkbox" value="<%= listItem._id %>" onChange="this.form.submit()">
+                            <div class="task">
+                                <p style="font-size: 1.3rem; color: #272343; font-weight: 500; float: left; margin-bottom: 0;"><%= listItem.title %></p>
+                                <div class="task_detail">
+                                    <p style="font-size: 1rem; width: 70%; text-align: left;"><%= listItem.description %> </p>
+                                    <p style="font-size: 0.8rem; vertical-align: middle;">Due: <%= listItem.deadline.day %>-<%= listItem.deadline.month %>-<%= listItem.deadline.year %></p>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                <% }); %> 
+            </div>
+                
+            <div>
+                <a href="/newitem"><button class="expandbtn" name="newList">+</button></a>
+            </div>
+
+            <a href="/logout"><button type="submit" class="logout">Log out</button></a>
+        </div>
+        <!-- <div class="next flexbox">
+            <h2>></h2>
+            <p>Next</p>
+        </div> -->
+    </div>
+</div>
+
+<%- include("footer") -%>

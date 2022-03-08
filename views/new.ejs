@@ -1,0 +1,24 @@
+<%- include("header") %> 
+
+<form action="/newitem" method="post">
+    <div class="new">
+        
+        <div class="form_group field">
+            <input type="input" class="form_field" placeholder="Add title" name="title" id='title' required />
+            <label for="title" class="form_label">Add title</label>
+        </div>
+        <div class="form_group field">
+            <input type="input" class="form_field" placeholder="Enter date (dd mm yyyy)" name="deadline" id='deadline'>
+            <label for="deadline" class="form_label">Enter deadline (dd mm yyyy)</label>
+        </div>
+        <br/>
+        <div class="form_group field">    
+            <input type="input" class="form_field" placeholder="Description" name="desc" id="desc" />
+            <label for="desc" class="form_label">Add description</label>
+        </div>
+        <br/>
+        <button type="submit" class="add">Add task</button>
+    </div>
+</form>
+
+<%- include("footer") %> 
