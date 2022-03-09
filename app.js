@@ -69,6 +69,7 @@ app.get("/", function(req, res) {
     res.render("home");
 });
 
+let duplicateUser = false;
 
 app.get("/list", function(req, res) {
     if (req.isAuthenticated()) {
@@ -116,17 +117,28 @@ app.post("/login", function(req, res) {
 
 
 app.get("/register", function(req, res) {
-    res.render("register");
+    res.render("register", { duplicateUser: duplicateUser });
+    duplicateUser = false;
 });
 app.post("/register", function(req, res) {
-    User.register({username: req.body.username}, req.body.password, function(err, user) {
-        if (err) {
-            console.log(err);
-            res.redirect("/register");
-        }
-        else {
-            passport.authenticate("local")(req, res, function() {
-                res.redirect("/list");
+    User.findOne({username: req.body.username}, function(err, foundUser) {
+        if (err) return err;
+        else if (foundUser) {
+                duplicateUser = true;
+                // res.statusCode = 409;
+                // return res.send({"message": "Username is already taken. Enter different username."})
+                res.redirect("/register");
+        } else {
+            duplicateUser = false;
+            User.register({username: req.body.username}, req.body.password, function(err, user) {
+                if (err) {
+                    console.log(err);
+                    res.redirect("/register");
+                } else {
+                    passport.authenticate("local")(req, res, function() {
+                        res.redirect("/list");
+                    });
+                }
             });
         }
     });

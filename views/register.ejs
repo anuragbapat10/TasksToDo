@@ -1,5 +1,11 @@
 <%- include("header") -%>
 
+<% if (duplicateUser === true) { %>
+    <div style="text-align: center;">
+        <p style="background-color: #f99; color: #ff0f0f; width: 100%; height: 40px; margin: 0;">Username taken! Enter another username.</p>
+    </div>
+<% } %>
+
 <span class="greeting" style="width: 100%; text-align: center;">Register</span>
 <form action="/register" method="post">
     <div class="new">
@@ -9,7 +15,7 @@
             <label for="username" class="form_label">Enter username</label>
         </div>
         <div class="form_group field">    
-            <input type="password" class="form_field" placeholder="Password" name="password" id="password" />
+            <input type="password" class="form_field" placeholder="Password" name="password" id="password" required />
             <label for="password" class="form_label">Enter password</label>
         </div>
         <br/>
