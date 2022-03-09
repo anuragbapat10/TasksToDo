@@ -70,6 +70,7 @@ app.get("/", function(req, res) {
 });
 
 let duplicateUser = false;
+let userPresent = true;
 
 app.get("/list", function(req, res) {
     if (req.isAuthenticated()) {
@@ -83,7 +84,8 @@ app.get("/list", function(req, res) {
                             month: "long",
                             year: "numeric"
                         }),
-                        listItems: foundUser.tasks
+                        listItems: foundUser.tasks,
+                        username: req.user.username
                     });
                 }
             }
@@ -102,14 +104,24 @@ app.post("/login", function(req, res) {
         username: req.body.username,
         password: req.body.password
     });
-    req.login(user, function(err) {
-        if (err) {
+
+    User.findOne({username: user.username}, function(err, foundUser) {
+        if (err) console.log(err);
+        else if (!foundUser) {
+            userPresent = false;
             res.redirect("/register");
-            console.log(err);
-        }
-        else {
-            passport.authenticate("local")(req, res, function() {
-                res.redirect("/list");
+        } else {
+            userPresent = true;
+            req.login(user, function(err) {
+                if (err) {
+                    res.redirect("/register");
+                    console.log(err);
+                }
+                else {
+                    passport.authenticate("local")(req, res, function() {
+                        res.redirect("/list");
+                    });
+                }
             });
         }
     });
@@ -117,7 +129,8 @@ app.post("/login", function(req, res) {
 
 
 app.get("/register", function(req, res) {
-    res.render("register", { duplicateUser: duplicateUser });
+    res.render("register", { duplicateUser: duplicateUser, userPresent: userPresent });
+    userPresent = true;
     duplicateUser = false;
 });
 app.post("/register", function(req, res) {

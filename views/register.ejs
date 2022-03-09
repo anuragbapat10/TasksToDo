@@ -6,6 +6,12 @@
     </div>
 <% } %>
 
+<% if (userPresent === false) { %>
+    <div style="text-align: center;">
+        <p style="background-color: #f99; color: #ff0f0f; width: 100%; height: 40px; margin: 0;">User is not present! Please register first.</p>
+    </div>
+<% } %>
+
 <span class="greeting" style="width: 100%; text-align: center;">Register</span>
 <form action="/register" method="post">
     <div class="new">
